@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./DropDown.css";
-function DropDown({ movies, onMovieChange }) {
+import movies from "../VideoData/videoData";
+
+function DropDown({onMovieChange }) {
 	const [selectedMovie, setSelectedMovie] = useState("");
 
 	function onMovieClick(e) {

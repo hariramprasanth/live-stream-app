@@ -1,10 +1,10 @@
 import React from "react";
 import "./VideoPlayer.css";
 
-function VideoPlayer() {
+function VideoPlayer({ selectedMovieSource }) {
 	return (
 		<div className="video-container">
-			<video src={"small.mp4"} controls></video>
+			<video src={selectedMovieSource} controls></video>
 		</div>
 	);
 }
