@@ -1,5 +1,6 @@
 import "./App.css";
 import DropDown from "./DropDown/DropDown";
+import VideoPlayer from "./VideoPlayer/VideoPlayer";
 function App() {
 	let movies = [
 		{
@@ -22,6 +23,7 @@ function App() {
 	return (
 		<div className="App">
 			<DropDown movies={movies} onMovieChange={onMovieChange}></DropDown>
+			<VideoPlayer></VideoPlayer>
 		</div>
 	);
 }
