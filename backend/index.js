@@ -28,7 +28,7 @@ app.get("/video", (req, res) => {
 	const videoPath = path.join(videosRootDirectory, videoRelativePath);
 
     if (!fs.existsSync(videoPath)) {
-		return res.status(404).send("Video not found at ${videoPath}");
+		return res.status(404).send("Video not found");
 	}
 
 	const stat = fs.statSync(videoPath);
