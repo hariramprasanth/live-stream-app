@@ -1,14 +1,24 @@
 import React, { useState, useEffect } from "react";
+import { getMoviesList } from "../api/getMoviesList";
 import "./DropDown.css";
-import movies from "../VideoData/videoData";
 
 function DropDown({ onMovieChange }) {
 	const [selectedMovie, setSelectedMovie] = useState("");
+	const [movies, setMovies] = useState([]);
 
 	useEffect(() => {
 		const urlParams = new URLSearchParams(window.location.search);
 		const initialMovieKey = urlParams.get("videokey");
 		setSelectedMovie(initialMovieKey || "");
+		async function fetchData() {
+			try {
+				let response = await getMoviesList();
+				setMovies(response.data);
+			} catch (error) {
+				console.error(error);
+			}
+		}
+		fetchData();
 	}, []);
 
 	function onMovieClick(e) {

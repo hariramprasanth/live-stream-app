@@ -5,10 +5,15 @@ const morgan = require("morgan");
 const app = express();
 const port = 8080;
 const movies = require("./movies.js")
-
+const cors = require("cors");
 const videosRootDirectory = "../videos/";
 
 app.use(morgan("dev"));
+app.use(
+	cors({
+		origin: "http://localhost:3000", 
+	})
+);
 
 app.get("/video", (req, res) => {
 	const videokey = req.query.videokey;
@@ -56,6 +61,10 @@ app.get("/video", (req, res) => {
 	}
 });
 
+app.get("/movies-list", (req, res) => {
+	const movieList = movies.map((movie) => ({ name: movie.name, key: movie.key }));
+	res.json(movieList);
+})
 app.listen(port, () => {
 	console.log(`Server is running at http://localhost:${port}`);
 });
