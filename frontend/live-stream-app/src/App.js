@@ -9,16 +9,24 @@ function App() {
 	const [selectedMovieSource, setSelectedMovieSource] = useState("");
 
 	useEffect(() => {
+		const urlParams = new URLSearchParams(window.location.search);
+		const initialMovieKey = urlParams.get("videokey");
+		setSelectedMovieKey(initialMovieKey || "");
+
 		if (selectedMovieKey !== "") {
 			let selectedMovieObject = movies.filter((movie) => movie.key === selectedMovieKey).at(0);
 			let url = "http://localhost:8080/video?videokey=" + selectedMovieObject.key;
-		    setSelectedMovieSource(url);
+			setSelectedMovieSource(url);
 		}
 	}, [selectedMovieKey]);
 
+	const handleMovieChange = (newMovieKey) => {
+		setSelectedMovieKey(newMovieKey);
+		window.history.pushState({}, "", `?videokey=${newMovieKey}`); 
+	};
 	return (
 		<div className="App">
-			<DropDown onMovieChange={setSelectedMovieKey}></DropDown>
+			<DropDown onMovieChange={handleMovieChange}></DropDown>
 			<VideoPlayer selectedMovieSource={selectedMovieSource}></VideoPlayer>
 		</div>
 	);

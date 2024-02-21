@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./DropDown.css";
 import movies from "../VideoData/videoData";
 
-function DropDown({onMovieChange }) {
+function DropDown({ onMovieChange }) {
 	const [selectedMovie, setSelectedMovie] = useState("");
 
+	useEffect(() => {
+		const urlParams = new URLSearchParams(window.location.search);
+		const initialMovieKey = urlParams.get("videokey");
+		setSelectedMovie(initialMovieKey || "");
+	}, []);
+
 	function onMovieClick(e) {
-        setSelectedMovie(e.target.value);
-        onMovieChange(e.target.value);
+		setSelectedMovie(e.target.value);
+		onMovieChange(e.target.value);
 	}
 
 	function showMovies(movie) {
