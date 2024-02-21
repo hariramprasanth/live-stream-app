@@ -6,12 +6,13 @@ const app = express();
 const port = 8080;
 const movies = require("./movies.js")
 const cors = require("cors");
-const videosRootDirectory = "../videos/";
+
+const videosRootDirectory = process.env.VIDEOS_DIRECTORY || "../videos/";
 
 app.use(morgan("dev"));
 app.use(
 	cors({
-		origin: "http://localhost:3000", 
+		origin: "*", 
 	})
 );
 
@@ -66,5 +67,5 @@ app.get("/movies-list", (req, res) => {
 	res.json(movieList);
 })
 app.listen(port, () => {
-	console.log(`Server is running at http://localhost:${port}`);
+	console.log(`Server is running`);
 });
