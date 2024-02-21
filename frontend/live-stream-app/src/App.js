@@ -11,8 +11,8 @@ function App() {
 	useEffect(() => {
 		if (selectedMovieKey !== "") {
 			let selectedMovieObject = movies.filter((movie) => movie.key === selectedMovieKey).at(0);
-
-			setSelectedMovieSource(selectedMovieObject.source);
+			let url = "http://localhost:8080/video?videokey=" + selectedMovieObject.key;
+		    setSelectedMovieSource(url);
 		}
 	}, [selectedMovieKey]);
 
