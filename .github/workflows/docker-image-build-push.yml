@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  image_build_push_job:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,11 +15,9 @@ jobs:
 
     - name: Set up Docker
       uses: docker/setup-buildx-action@v1
-      with:
-        dockerfile: backend/Dockerfile  # Path to your Dockerfile if it's not in the root
 
     - name: Build Docker Image
-      run: docker build --tag hariramprasanth/live-stream-backend:${{ github.run_id }} .
+      run: docker build --tag hariramprasanth/live-stream-backend:${{ github.run_id }} ./backend/Dockerfile
 
     - name: Log in to Docker Hub
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
