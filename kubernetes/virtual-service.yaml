@@ -1,0 +1,24 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: live-stream-vs
+spec:
+  hosts:
+    - "a97fa899580cd4f3387fb82c4ebe248f-1176312932.ap-south-1.elb.amazonaws.com"
+  gateways: 
+    - live-stream-gateway
+  http:
+    - match:
+        - uri: 
+           regex: /ls-backend(/|$)(.*) # This will look for paths like /ls-backend/movies-list,   /ls-backend/videos/sample
+      rewrite:
+        uriRegexRewrite:
+          match: /ls-backend(/|$)(.*)  
+          rewrite: /\2      # This will rewrite the uri path to /movies-list , /videos/sample
+      route:
+         - destination:
+            host: ls-backend
+            port: 
+              number: 80
+
+

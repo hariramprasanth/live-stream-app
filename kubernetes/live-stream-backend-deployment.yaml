@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ls-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ls-backend
+  template:
+    metadata:
+      labels:
+        app: ls-backend
+    spec:
+      containers:
+      - name: ls-backend
+        image: hariramprasanth/live-stream-backend:8017935198
+        ports:
+        - containerPort: 8080
+        env:
+          - name: VIDEOS_DIRECTORY
+            value: /videos
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  ls-backend
+spec:
+  selector:
+    app: ls-backend
+  type: ClusterIP 
+  ports:
+  - name: ls-backend
+    port:  80
+    targetPort:  8080
