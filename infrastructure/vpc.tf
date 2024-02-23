@@ -11,7 +11,7 @@ resource "aws_subnet" "web_server_subnet_1" {
   availability_zone_id    = "aps1-az1"
   map_public_ip_on_launch = true
   tags = {
-    Name                                  = "web-server-subnet-1"
+    Name                                   = "web-server-subnet-1"
     "kubernetes.io/cluster/web-server-eks" = "shared"
   }
 }
@@ -21,7 +21,7 @@ resource "aws_subnet" "web_server_subnet_2" {
   availability_zone_id    = "aps1-az2"
   map_public_ip_on_launch = true
   tags = {
-    Name                                  = "web-server-subnet-2"
+    Name                                   = "web-server-subnet-2"
     "kubernetes.io/cluster/web-server-eks" = "shared"
 
   }
@@ -32,7 +32,7 @@ resource "aws_subnet" "web_server_subnet_3" {
   availability_zone_id    = "aps1-az3"
   map_public_ip_on_launch = true
   tags = {
-    Name                                  = "web-server-subnet-3"
+    Name                                   = "web-server-subnet-3"
     "kubernetes.io/cluster/web-server-eks" = "shared"
   }
 }
