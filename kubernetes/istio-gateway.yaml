@@ -12,4 +12,4 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - 'a97fa899580cd4f3387fb82c4ebe248f-1176312932.ap-south-1.elb.amazonaws.com'
+    - 'Load balancer domain or gateway domain'
