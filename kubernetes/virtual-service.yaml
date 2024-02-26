@@ -4,7 +4,7 @@ metadata:
   name: live-stream-vs
 spec:
   hosts:
-    - "Load balancer domain or gateway domain"
+    - "ls-app.testeksdemopoc.net"
   gateways: 
     - live-stream-gateway
   http:

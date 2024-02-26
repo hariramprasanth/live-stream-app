@@ -1,3 +1,53 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:ap-south-1:160071257600:certificate/e7324c70-1689-407b-9ae0-64ad6d92627e
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "https"
+    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "300"
+    
+  labels:
+    app: istio-ingressgateway
+    install.operator.istio.io/owning-resource: installed-state
+    install.operator.istio.io/owning-resource-namespace: istio-system
+    istio: ingressgateway
+    istio.io/rev: default
+    operator.istio.io/component: IngressGateways
+    operator.istio.io/managed: Reconcile
+    operator.istio.io/version: 1.20.3
+    release: istio
+  name: istio-ingressgateway
+  namespace: istio-system
+spec:
+  ports:
+    - name: status-port
+      port: 15021
+      protocol: TCP
+      targetPort: 15021
+    - name: http2
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+      nodePort: 31380
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 8443
+    - name: tcp
+      port: 31400
+      protocol: TCP
+      targetPort: 31400
+    - name: tls
+      port: 15443
+      protocol: TCP
+      targetPort: 15443
+  selector:
+    app: istio-ingressgateway
+    istio: ingressgateway
+  type: LoadBalancer
+
+---
 # See more at https://istio.io/docs/reference/config/networking/gateway/
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
@@ -12,4 +62,10 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    - 'Load balancer domain or gateway domain'
+    - 'ls-app.testeksdemopoc.net'
+  - port:
+      number: 443
+      name: https
+      protocol: HTTP
+    hosts:
+    - 'ls-app.testeksdemopoc.net'

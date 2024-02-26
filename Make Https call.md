@@ -1,4 +1,4 @@
-# TO make kubernetes serve https
+# TO make kubernetes services use https protocal
 
 ## Setup domain in Route 53
 1. Buy a domain or use the existing one
@@ -8,15 +8,25 @@
 
 4. Now try do `dig NS <domain> +short`
 
-## Create Certoficate with ACM
+## Create Certificate with ACM
 1. go to ACM
 2. Request a certificate
 3. give `*.<domain>` as fqdn, and Validatiion method as DNS Validation
 4. it will be in pending  state
 6. Click create records in route 53 and done
 7. It will take some time (5 mins) to approved
-8. Copy the arn of the ACM certifcate and use it in kubernetes service object annotation. It will add certificates to ELB created by k8 service object. So it will terminate ssl at ELB and route traffic to kubernets cluster in http.
+
 
 ### Route Traffic from domain to ELB
 1. Create a `A Record ` of ls-app.< domain > route to aws resource ELB using alias.
-2. In frontend use this URL as the base url for backend.
+
+
+## Without Istio
+1. Create a kubernetes service object with acm annotation with acm arn. It will make ELB termiante https call at ELB.  The call fro ELB to cluster is http
+2. In frontned use the `ls-app.< domain >` as it directly connected to the ELB and it again in turns conneect directly the backend service
+
+## With Istio
+1. Modify Istio `ingress gateway service` object by adding the annotation with ACM arn. It will also terminate the https call at ELB
+2. In virtual service and gateway add the `ls-app.< domain >` as the host. 
+3. In the virtual service do the path based routing s-app for the < `<domain >/ls-backend` and route to intended backend service
+4. In the frontend make `ls-app.< domain >/ls-backend` as the base url.
