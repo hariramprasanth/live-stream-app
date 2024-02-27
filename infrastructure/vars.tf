@@ -5,10 +5,10 @@ variable "aws_region" {
 
 variable "k8_namespace" {
   description = "K8 namespace"
-  default     = "default"
+  default     = "kubesystem"
 }
 
 variable "k8_service_account" {
   description = "K8 Service Account"
-  default     = "efs-read-write-sa"
+  default     = "efs-csi-*"
 }

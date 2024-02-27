@@ -10,6 +10,6 @@ resource "aws_iam_role" "web_server_pods_efs_read_write_role" {
 }
 
 resource "aws_iam_role_policy_attachment" "eks_AmazonElasticFileSystemReadOnlyAccess" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonElasticFileSystemReadOnlyAccess"
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy"
   role       = aws_iam_role.web_server_pods_efs_read_write_role.name
 }
