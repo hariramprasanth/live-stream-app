@@ -1,7 +1,7 @@
 resource "aws_cloudfront_distribution" "live_stream_web_app_cfd" {
   origin {
-    domain_name = aws_s3_bucket.live_stream_web_app_bucket.bucket_regional_domain_name
-    origin_id   = aws_s3_bucket.live_stream_web_app_bucket.bucket_regional_domain_name
+    domain_name              = aws_s3_bucket.live_stream_web_app_bucket.bucket_regional_domain_name
+    origin_id                = aws_s3_bucket.live_stream_web_app_bucket.bucket_regional_domain_name
     origin_access_control_id = aws_cloudfront_origin_access_control.live_stream_web_app_cfd_access-control.id
   }
 
