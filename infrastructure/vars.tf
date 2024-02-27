@@ -5,7 +5,7 @@ variable "aws_region" {
 
 variable "k8_namespace" {
   description = "K8 namespace"
-  default     = "kubesystem"
+  default     = "kube-system"
 }
 
 variable "k8_service_account" {
