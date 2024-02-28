@@ -8,7 +8,12 @@ variable "k8_namespace" {
   default     = "kube-system"
 }
 
-variable "k8_service_account" {
+variable "k8_efs_service_account" {
   description = "K8 Service Account"
   default     = "efs-csi-*"
+}
+
+variable "k8_cni_service_account" {
+  description = "K8 Service Account"
+  default     = "aws-node"
 }

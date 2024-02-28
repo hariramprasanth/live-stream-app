@@ -6,11 +6,6 @@ resource "aws_eks_node_group" "web_server_node_group" {
   capacity_type   = "ON_DEMAND"
   instance_types  = ["t2.medium"]
 
-  remote_access {
-    ec2_ssh_key               = "web-server-ssh-key-pair"
-    source_security_group_ids = [aws_security_group.web_server_sg.id] # this security group is not configured for ec2 instances for inbound and outbound rule. This will appied to cluster as additional security group. Not to EC2s
-  }
-
   scaling_config {
     desired_size = 2
     max_size     = 3
@@ -19,18 +14,18 @@ resource "aws_eks_node_group" "web_server_node_group" {
   subnet_ids = [
     aws_subnet.web_server_subnet_1.id,
     aws_subnet.web_server_subnet_2.id,
-    aws_subnet.web_server_subnet_3.id
+    aws_subnet.web_server_subnet_3.id,
+    aws_subnet.web_server_subnet_4.id
   ]
   depends_on = [
     aws_iam_role_policy_attachment.eks_AmazonEC2ContainerRegistryReadOnly,
-    aws_iam_role_policy_attachment.eks_AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.eks_AmazonEKSWorkerNodePolicy
   ]
 
 }
 
 resource "aws_iam_role" "web_server_node_role" {
-  name = "eks-cluster-node-role"
+  name = "web-server-node-role"
 
   assume_role_policy = jsonencode({
     Statement = [{
@@ -49,10 +44,6 @@ resource "aws_iam_role_policy_attachment" "eks_AmazonEKSWorkerNodePolicy" {
   role       = aws_iam_role.web_server_node_role.name
 }
 
-resource "aws_iam_role_policy_attachment" "eks_AmazonEKS_CNI_Policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-  role       = aws_iam_role.web_server_node_role.name
-}
 
 resource "aws_iam_role_policy_attachment" "eks_AmazonEC2ContainerRegistryReadOnly" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
