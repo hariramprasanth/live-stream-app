@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: ls-backend
 spec:
-  replicas: 1
+  replicas: 6
   selector:
     matchLabels:
       app: ls-backend
@@ -20,7 +20,13 @@ spec:
         env:
           - name: VIDEOS_DIRECTORY
             value: /videos
-
+        volumeMounts:
+          - name:  ls-storage
+            mountPath:  /videos
+      volumes:
+        - name: ls-storage
+          persistentVolumeClaim:
+            claimName: efs-pvc
 ---
 
 kind: Service
