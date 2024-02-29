@@ -9,6 +9,10 @@ const cors = require("cors");
 
 const videosRootDirectory = process.env.VIDEOS_DIRECTORY || "../videos/";
 
+let chunckLimit = process.env.CHUNCK_LIMIT || 1000000; // 1MB 
+
+chunckLimit = parseInt(chunckLimit,10)
+ 
 app.use(morgan("dev"));
 app.use(
 	cors({
@@ -38,7 +42,7 @@ app.get("/video", (req, res) => {
 	if (range) {
 		const parts = range.replace(/bytes=/, "").split("-");
 		const start = parseInt(parts[0], 10);
-		const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+		const end = Math.min( parts[1] ? parseInt(parts[1], 10) : fileSize - 1, start+chunckLimit);
 		const chunkSize = end - start + 1;
 
 		const file = fs.createReadStream(videoPath, { start, end });
